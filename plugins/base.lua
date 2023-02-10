@@ -1,0 +1,2 @@
+-- This is here as a placeholder for now. We'll implement the ChatKC protocol
+-- as a proof of concept for extensions here. ~Alex

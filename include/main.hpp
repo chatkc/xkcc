@@ -20,10 +20,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 #include <QAction>
 #include <QMainWindow>
 #include <QMenu>
+#include <QTabWidget>
 
 class MainWindow : public QMainWindow {
 public:
     MainWindow();
+    ~MainWindow();
 
 private:
     void createActions();
@@ -32,9 +34,11 @@ private:
     QAction *aboutAction;
     QAction *connectAction;
     QAction *disconnectAction;
+    QAction *pluginsAction;
     QAction *preferencesAction;
-    QMenu *helpMenu;
+    QMenu *clientMenu;
     QMenu *serverMenu;
+    QTabWidget *tabWidget;
 };
 
 #endif

@@ -22,12 +22,26 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 MainWindow::MainWindow() {
     createActions();
     createMenus();
-    // TODO: Create a row of tabs(one for each connected server)
+    tabWidget = new QTabWidget(this);
+    setCentralWidget(tabWidget);
     // TODO: Create a giant box for storing messages
     // TODO: Create a text box at the bottom for sending messages
     // TODO: Create a box to the side that shows a list of connected users
     resize(640, 480);
     setWindowTitle("XKCC");
+}
+
+MainWindow::~MainWindow() {
+    // Central Widget
+    delete tabWidget;
+    // Menus
+    delete clientMenu;
+    delete serverMenu;
+    // Actions
+    delete aboutAction;
+    delete connectAction;
+    delete disconnectAction;
+    delete preferencesAction;
 }
 
 void MainWindow::createActions() {
@@ -40,6 +54,9 @@ void MainWindow::createActions() {
     disconnectAction = new QAction(tr("&Disconnect"), this);
     disconnectAction->setStatusTip(tr("Disconnects from the current server"));
     // TODO: Connect the disconnect action to a function
+    pluginsAction = new QAction(tr("&Plugins"), this);
+    pluginsAction->setStatusTip(tr("Manages client plugins"));
+    // TODO: Connect the plugins action to a function
     preferencesAction = new QAction(tr("&Preferences"), this);
     preferencesAction->setStatusTip(tr("Sets user preferences on the server"));
     // TODO: Connect the preferences action to a function
@@ -51,8 +68,9 @@ void MainWindow::createMenus() {
     serverMenu->addAction(disconnectAction);
     serverMenu->addSeparator();
     serverMenu->addAction(preferencesAction);
-    helpMenu = menuBar()->addMenu(tr("&Help"));
-    helpMenu->addAction(aboutAction);
+    clientMenu = menuBar()->addMenu(tr("&Client"));
+    clientMenu->addAction(pluginsAction);
+    clientMenu->addAction(aboutAction);
 }
 
 int main(int argc, char *argv[]) {
