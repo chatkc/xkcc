@@ -14,38 +14,24 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 
-#ifndef MAIN_HPP
-#define MAIN_HPP
+#ifndef CHANNEL_HPP
+#define CHANNEL_HPP
 
-#include <vector>
+#include <QUrl>
+#include <QWidget>
 
-#include <QAction>
-#include <QMainWindow>
-#include <QMenu>
-#include <QTabWidget>
+#include "authentication.hpp"
 
-#include "channel.hpp"
-
-class MainWindow : public QMainWindow {
+class Channel : public QWidget {
 public:
-    MainWindow();
-    ~MainWindow();
+    Channel(Authentication *auth, QUrl *url);
+    ~Channel();
+
+    QString title();
 
 private:
-    void addChannel(Channel *channel);
-    void createActions();
-    void createMenus();
-
-    std::vector<Channel*> channels;
-
-    QAction *aboutAction;
-    QAction *connectAction;
-    QAction *disconnectAction;
-    QAction *pluginsAction;
-    QAction *preferencesAction;
-    QMenu *clientMenu;
-    QMenu *serverMenu;
-    QTabWidget *tabWidget;
+    Authentication *auth;
+    QUrl *url;
 };
 
 #endif

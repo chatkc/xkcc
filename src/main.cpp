@@ -20,10 +20,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 #include "main.hpp"
 
 MainWindow::MainWindow() {
+    channels = {};
     createActions();
     createMenus();
     tabWidget = new QTabWidget(this);
     setCentralWidget(tabWidget);
+    // BLANK CHANNEL FOR TESTING ONLY ~Bread
+    addChannel(new Channel(new Authentication(), new QUrl("chatkc://server.mattkc.com")));
     // TODO: Create a giant box for storing messages
     // TODO: Create a text box at the bottom for sending messages
     // TODO: Create a box to the side that shows a list of connected users
@@ -32,6 +35,11 @@ MainWindow::MainWindow() {
 }
 
 MainWindow::~MainWindow() {
+    // Channels
+    for(Channel *chl : channels) {
+        delete chl;
+    }
+    // delete channels;
     // Central Widget
     delete tabWidget;
     // Menus
@@ -42,6 +50,11 @@ MainWindow::~MainWindow() {
     delete connectAction;
     delete disconnectAction;
     delete preferencesAction;
+}
+
+void MainWindow::addChannel(Channel *channel) {
+    channels.push_back(channel);
+    tabWidget->addTab(channel, channel->title());
 }
 
 void MainWindow::createActions() {
