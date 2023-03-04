@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.18)
 project(xkcc VERSION 1.0.0 LANGUAGES CXX)
 
 find_package(Lua REQUIRED)
-find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core WebSockets Widgets)
 
 qt_standard_project_setup()
 
@@ -21,5 +21,6 @@ target_link_libraries(xkcc
     PRIVATE
         ${LUA_LIBRARIES}
         Qt6::Core
+        Qt6::WebSockets
         Qt6::Widgets
 )

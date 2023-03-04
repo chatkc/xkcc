@@ -57,6 +57,10 @@ void MainWindow::addChannel(Channel *channel) {
     tabWidget->addTab(channel, channel->title());
 }
 
+void MainWindow::connectServer() {
+    // TODO: Create a popup window to collect the URL and authentication type
+}
+
 void MainWindow::createActions() {
     aboutAction = new QAction(tr("&About"), this);
     aboutAction->setStatusTip(tr("About XKCC"));

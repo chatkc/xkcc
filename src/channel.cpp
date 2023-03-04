@@ -18,11 +18,22 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 
 Channel::Channel(Authentication *auth, QUrl *url) {
     this->auth = auth;
+    sock = new QWebSocket();
     this->url = url;
+    // Just making *sure* this connects to the correct port. ~Alex
+    if(this->url->port() == -1) {
+        this->url->setPort(2002);
+    }
+    sock->open(*url);
+    script = luaL_newstate();
+    // TODO: Initialize plugins for the channel
 }
 
 Channel::~Channel() {
+    lua_close(script);
+    sock->close();
     delete auth;
+    delete sock;
     delete url;
 }
 

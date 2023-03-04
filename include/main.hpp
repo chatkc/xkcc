@@ -36,6 +36,8 @@ private:
     void createActions();
     void createMenus();
 
+    void connectServer();
+
     std::vector<Channel*> channels;
 
     QAction *aboutAction;

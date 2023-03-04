@@ -17,7 +17,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 #ifndef CHANNEL_HPP
 #define CHANNEL_HPP
 
+#include <lua.hpp>
+
 #include <QUrl>
+#include <QWebSocket>
 #include <QWidget>
 
 #include "authentication.hpp"
@@ -31,6 +34,8 @@ public:
 
 private:
     Authentication *auth;
+    lua_State *script;
+    QWebSocket *sock;
     QUrl *url;
 };
 
