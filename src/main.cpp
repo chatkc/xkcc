@@ -105,6 +105,10 @@ void MainWindow::createMenus() {
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
+
+    // Remove hardcoded dark and and allow users to set their own theme/completely customize their own ~HW12Dev
+    app.setStyleSheet("QWidget {background-color: #1c1e1c;color: #b5b5b5;selection-background-color: #646665;border: 1px #000000}");
+
     MainWindow mainWindow;
     mainWindow.show();
     return app.exec();
