@@ -23,6 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 #include <QMainWindow>
 #include <QMenu>
 #include <QTabWidget>
+#include <QPushButton>
 
 #include "channel.hpp"
 
@@ -37,6 +38,7 @@ private:
     void createMenus();
 
     void aboutDialog();
+    void openQtAboutDialog();
     void connectServer();
     void disconnectServer();
 

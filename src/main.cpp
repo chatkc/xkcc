@@ -53,6 +53,10 @@ MainWindow::~MainWindow() {
     delete preferencesAction;
 }
 
+void MainWindow::openQtAboutDialog() {
+    QMessageBox::aboutQt(this);
+}
+
 void MainWindow::aboutDialog() {
     QMessageBox *about = new QMessageBox(this);
     QPushButton *aboutQt = about->addButton("About Qt", QMessageBox::ActionRole);
@@ -79,7 +83,8 @@ void MainWindow::aboutDialog() {
     // TODO: We should put a summary at the top using `about->setText`. ~Alex
     about->setInformativeText(licenseText);
     about->setStandardButtons(QMessageBox::Ok);
-    // TODO: Figure out how to get "About Qt" to call QMessageBox::aboutQt() ~Alex
+    
+    connect(aboutQt, &QPushButton::pressed, this, &MainWindow::openQtAboutDialog);
     about->exec();
 }
 
