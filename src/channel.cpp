@@ -30,6 +30,7 @@ Channel::Channel(Authentication *auth, QUrl *url) {
 }
 
 Channel::~Channel() {
+    qDebug() << "Deleting channel: " << this->url->toString();
     lua_close(script);
     sock->close();
     delete auth;

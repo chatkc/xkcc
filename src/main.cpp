@@ -61,6 +61,17 @@ void MainWindow::connectServer() {
     // TODO: Create a popup window to collect the URL and authentication type
 }
 
+void MainWindow::disconnectServer() {
+    int index = tabWidget->currentIndex();
+    if(index == -1) {
+        return;
+    }
+    auto widget = tabWidget->widget(index);
+    tabWidget->removeTab(index);
+    channels.erase(std::remove(channels.begin(), channels.end(), widget), channels.end());
+    delete widget;
+}
+
 void MainWindow::createActions() {
     aboutAction = new QAction(tr("&About"), this);
     aboutAction->setStatusTip(tr("About XKCC"));
@@ -68,9 +79,11 @@ void MainWindow::createActions() {
     connectAction = new QAction(tr("&Connect"), this);
     connectAction->setStatusTip(tr("Connects to a server"));
     // TODO: Connect the connect action to a function
+    connect(connectAction, &QAction::triggered, this, &MainWindow::connectServer);
     disconnectAction = new QAction(tr("&Disconnect"), this);
     disconnectAction->setStatusTip(tr("Disconnects from the current server"));
     // TODO: Connect the disconnect action to a function
+    connect(disconnectAction, &QAction::triggered, this, &MainWindow::disconnectServer);
     pluginsAction = new QAction(tr("&Plugins"), this);
     pluginsAction->setStatusTip(tr("Manages client plugins"));
     // TODO: Connect the plugins action to a function

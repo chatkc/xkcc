@@ -37,6 +37,7 @@ private:
     void createMenus();
 
     void connectServer();
+    void disconnectServer();
 
     std::vector<Channel*> channels;
 
