@@ -16,6 +16,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 
 #include <QApplication>
 #include <QMenuBar>
+#include <QMessageBox>
 
 #include "main.hpp"
 
@@ -52,6 +53,36 @@ MainWindow::~MainWindow() {
     delete preferencesAction;
 }
 
+void MainWindow::aboutDialog() {
+    QMessageBox *about = new QMessageBox(this);
+    QPushButton *aboutQt = about->addButton("About Qt", QMessageBox::ActionRole);
+    const QString licenseText = QMessageBox::tr(
+        "<p>XKCC is a cross-platform ChatKC client for Qt-based desktop environments"
+        "Copyright (C) %1 %2</p>"
+        "<p>This program is free software: you can redistribute it and/or modify"
+        "it under the terms of the GNU Affero General Public License as published"
+        "by the Free Software Foundation, either version 3 of the License, or"
+        "(at your option) any later version.</p>"
+        "<p>This program is distributed in the hope that it will be useful,"
+        "but WITHOUT ANY WARRANTY; without even the implied warranty of"
+        "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"
+        "GNU Affero General Public License for more details.</p>"
+        "<p>You should have received a copy of the GNU Affero General Public License"
+        "along with this program.  If not, see &lt;<a href=\"%3\">%3</a>&gt;.</p>"
+    ).arg(
+        QStringLiteral("2023"),
+        QStringLiteral("Alexander Hill"),
+        QStringLiteral("https://www.gnu.org/licenses/")
+    );
+    about->setAttribute(Qt::WA_DeleteOnClose);
+    about->setWindowTitle(tr("About XKCC"));
+    // TODO: We should put a summary at the top using `about->setText`. ~Alex
+    about->setInformativeText(licenseText);
+    about->setStandardButtons(QMessageBox::Ok);
+    // TODO: Figure out how to get "About Qt" to call QMessageBox::aboutQt() ~Alex
+    about->exec();
+}
+
 void MainWindow::addChannel(Channel *channel) {
     channels.push_back(channel);
     tabWidget->addTab(channel, channel->title());
@@ -75,14 +106,12 @@ void MainWindow::disconnectServer() {
 void MainWindow::createActions() {
     aboutAction = new QAction(tr("&About"), this);
     aboutAction->setStatusTip(tr("About XKCC"));
-    // TODO: Connect the about action to a function
+    connect(aboutAction, &QAction::triggered, this, &MainWindow::aboutDialog);
     connectAction = new QAction(tr("&Connect"), this);
     connectAction->setStatusTip(tr("Connects to a server"));
-    // TODO: Connect the connect action to a function
     connect(connectAction, &QAction::triggered, this, &MainWindow::connectServer);
     disconnectAction = new QAction(tr("&Disconnect"), this);
     disconnectAction->setStatusTip(tr("Disconnects from the current server"));
-    // TODO: Connect the disconnect action to a function
     connect(disconnectAction, &QAction::triggered, this, &MainWindow::disconnectServer);
     pluginsAction = new QAction(tr("&Plugins"), this);
     pluginsAction->setStatusTip(tr("Manages client plugins"));

@@ -36,6 +36,7 @@ private:
     void createActions();
     void createMenus();
 
+    void aboutDialog();
     void connectServer();
     void disconnectServer();
 
