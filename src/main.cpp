@@ -83,7 +83,7 @@ void MainWindow::aboutDialog() {
     // TODO: We should put a summary at the top using `about->setText`. ~Alex
     about->setInformativeText(licenseText);
     about->setStandardButtons(QMessageBox::Ok);
-    
+
     connect(aboutQt, &QPushButton::pressed, this, &MainWindow::openQtAboutDialog);
     about->exec();
 }
@@ -108,6 +108,14 @@ void MainWindow::disconnectServer() {
     delete widget;
 }
 
+void MainWindow::openPluginsMenu() {
+    //TODO: implement the plugins menu
+}
+
+void MainWindow::openPreferencesMenu() {
+    //TODO: implement the preferences menu
+}
+
 void MainWindow::createActions() {
     aboutAction = new QAction(tr("&About"), this);
     aboutAction->setStatusTip(tr("About XKCC"));
@@ -120,10 +128,10 @@ void MainWindow::createActions() {
     connect(disconnectAction, &QAction::triggered, this, &MainWindow::disconnectServer);
     pluginsAction = new QAction(tr("&Plugins"), this);
     pluginsAction->setStatusTip(tr("Manages client plugins"));
-    // TODO: Connect the plugins action to a function
+    connect(pluginsAction, &QAction::triggered, this, &MainWindow::openPluginsMenu);
     preferencesAction = new QAction(tr("&Preferences"), this);
     preferencesAction->setStatusTip(tr("Sets user preferences on the server"));
-    // TODO: Connect the preferences action to a function
+    connect(preferencesAction, &QAction::triggered, this, &MainWindow::openPreferencesMenu);
 }
 
 void MainWindow::createMenus() {

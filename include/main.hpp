@@ -42,6 +42,9 @@ private:
     void connectServer();
     void disconnectServer();
 
+    void openPreferencesMenu();
+    void openPluginsMenu();
+
     std::vector<Channel*> channels;
 
     QAction *aboutAction;
