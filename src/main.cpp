@@ -61,7 +61,7 @@ void MainWindow::aboutDialog() {
     QMessageBox *about = new QMessageBox(this);
     QPushButton *aboutQt = about->addButton("About Qt", QMessageBox::ActionRole);
     const QString licenseText = QMessageBox::tr(
-        "<p>XKCC is a cross-platform ChatKC client for Qt-based desktop environments"
+        "<p>XKCC is a cross-platform ChatKC client for Qt-based desktop environments\n"
         "Copyright (C) %1 %2</p>"
         "<p>This program is free software: you can redistribute it and/or modify"
         "it under the terms of the GNU Affero General Public License as published"
@@ -72,7 +72,7 @@ void MainWindow::aboutDialog() {
         "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"
         "GNU Affero General Public License for more details.</p>"
         "<p>You should have received a copy of the GNU Affero General Public License"
-        "along with this program.  If not, see &lt;<a href=\"%3\">%3</a>&gt;.</p>"
+        "along with this program.  If not, see &lt;<a href=\"%3\" style=\"color:purple;\">%3</a>&gt;.</p>"
     ).arg(
         QStringLiteral("2023"),
         QStringLiteral("Alexander Hill"),
@@ -149,7 +149,7 @@ int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
     // Remove hardcoded dark and and allow users to set their own theme/completely customize their own ~HW12Dev
-    app.setStyleSheet("QWidget {background-color: #1c1e1c;color: #b5b5b5;selection-background-color: #646665;border: 1px #000000}");
+    app.setStyleSheet("QWidget {background-color: #1c1e1c;color: #b5b5b5;selection-background-color: #646665;border: 1px #000000;}");
 
     MainWindow mainWindow;
     mainWindow.show();
