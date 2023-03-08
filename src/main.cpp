@@ -62,16 +62,16 @@ void MainWindow::aboutDialog() {
     QPushButton *aboutQt = about->addButton("About Qt", QMessageBox::ActionRole);
     const QString licenseText = QMessageBox::tr(
         "<p>XKCC is a cross-platform ChatKC client for Qt-based desktop environments\n"
-        "Copyright (C) %1 %2</p>"
-        "<p>This program is free software: you can redistribute it and/or modify"
-        "it under the terms of the GNU Affero General Public License as published"
-        "by the Free Software Foundation, either version 3 of the License, or"
-        "(at your option) any later version.</p>"
-        "<p>This program is distributed in the hope that it will be useful,"
-        "but WITHOUT ANY WARRANTY; without even the implied warranty of"
-        "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"
-        "GNU Affero General Public License for more details.</p>"
-        "<p>You should have received a copy of the GNU Affero General Public License"
+        "Copyright (C) %1 %2</p>\n"
+        "<p>This program is free software: you can redistribute it and/or modify\n"
+        "it under the terms of the GNU Affero General Public License as published\n"
+        "by the Free Software Foundation, either version 3 of the License, or\n"
+        "(at your option) any later version.</p>\n"
+        "<p>This program is distributed in the hope that it will be useful,\n"
+        "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+        "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+        "GNU Affero General Public License for more details.</p>\n"
+        "<p>You should have received a copy of the GNU Affero General Public License\n"
         "along with this program.  If not, see &lt;<a href=\"%3\" style=\"color:purple;\">%3</a>&gt;.</p>"
     ).arg(
         QStringLiteral("2023"),
