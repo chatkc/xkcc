@@ -24,18 +24,33 @@ Channel::Channel(Authentication *auth, QUrl *url) {
     if(this->url->port() == -1) {
         this->url->setPort(2002);
     }
-    sock->open(*url);
     script = luaL_newstate();
+    init_api();
     // TODO: Initialize plugins for the channel
+    // Make sure we don't open a connection to the server before we're able to
+    // handle requests! ~Alex
+    sock->open(*url);
 }
 
 Channel::~Channel() {
-    qDebug() << "Deleting channel: " << this->url->toString();
-    lua_close(script);
+    // qDebug() << "Deleting channel: " << this->url->toString();
     sock->close();
+    lua_close(script);
     delete auth;
     delete sock;
     delete url;
+}
+
+void Channel::init_api() {
+    // xkcc
+    lua_pushstring(script, "xkcc");
+    lua_createtable(script, 0, 1);
+    // xkcc.hook
+    lua_pushstring(script, "hook");
+    // This is equivalent to lua_createtable(script, 0, 0) anyways. ~Alex
+    lua_newtable(script);
+    // TODO: More Lua API stuff ~Alex
+    lua_settable(script, -3);
 }
 
 QString Channel::title() {

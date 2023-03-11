@@ -37,6 +37,8 @@ private:
     lua_State *script;
     QWebSocket *sock;
     QUrl *url;
+
+    void init_api();
 };
 
 #endif
