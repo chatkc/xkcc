@@ -24,3 +24,7 @@ target_link_libraries(xkcc
         Qt6::WebSockets
         Qt6::Widgets
 )
+
+add_custom_command(TARGET xkcc POST_BUILD
+                    COMMAND ${CMAKE_COMMAND} -E copy_directory
+                        ${CMAKE_SOURCE_DIR}/plugins/ $<TARGET_FILE_DIR:xkcc>/plugins/)

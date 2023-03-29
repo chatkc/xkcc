@@ -22,6 +22,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 #include <QUrl>
 #include <QWebSocket>
 #include <QWidget>
+#include <QDir>
 
 #include "authentication.hpp"
 
@@ -39,6 +40,7 @@ private:
     QUrl *url;
 
     void init_api();
+    void init_plugins();
 };
 
 #endif

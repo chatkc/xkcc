@@ -16,6 +16,18 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 
 #include "channel.hpp"
 
+/** streamline into better solution
+ * only use with luaL_dostring and luaL_dofile
+ * */
+bool lua_error_handler(lua_State* script, bool error) {
+    if(error)
+    {
+        qCritical() << lua_tostring(script, -1);
+        lua_pop(script, 1);
+    }
+    return error;
+}
+
 Channel::Channel(Authentication *auth, QUrl *url) {
     this->auth = auth;
     sock = new QWebSocket();
@@ -29,6 +41,8 @@ Channel::Channel(Authentication *auth, QUrl *url) {
     // TODO: Initialize plugins for the channel
     // Make sure we don't open a connection to the server before we're able to
     // handle requests! ~Alex
+    init_plugins();
+
     sock->open(*url);
 }
 
@@ -42,15 +56,50 @@ Channel::~Channel() {
 }
 
 void Channel::init_api() {
+    // Basic sandboxing
+    luaL_requiref(script, LUA_TABLIBNAME, luaopen_table, 1);
+    lua_pop(script, 1);
+
+    luaL_requiref(script, LUA_GNAME, luaopen_base, 1);
+    lua_pop(script, 1);
+
+    // all of this has been moved to base.lua
     // xkcc
-    lua_pushstring(script, "xkcc");
-    lua_createtable(script, 0, 1);
+    //lua_pushstring(script, "xkcc");
+    //lua_createtable(script, 0, 1);
     // xkcc.hook
-    lua_pushstring(script, "hook");
+    //lua_pushstring(script, "hook");
     // This is equivalent to lua_createtable(script, 0, 0) anyways. ~Alex
-    lua_newtable(script);
+    //lua_newtable(script);
     // TODO: More Lua API stuff ~Alex
-    lua_settable(script, -3);
+    //lua_settable(script, -3);
+}
+
+void Channel::init_plugins() {
+    // Allow possible customization later???? ~HW12Dev
+    auto plugins_dir = QDir("plugins/");
+
+    if (!plugins_dir.exists())
+        plugins_dir.mkdir(".");
+
+    // Abort if base.lua is not present
+    if (!QFile(plugins_dir.absolutePath() + "/base.lua").exists())
+    {
+        qFatal("base.lua does not exist, please ensure it was bundled with your copy of this program or obtain a new one from https://github.com/chatkc/xkcc");
+    }
+
+    // always load base first
+    qInfo() << "Loading base plugin";
+    lua_error_handler(script, luaL_dofile(script, "plugins/base.lua"));
+
+    foreach (QFileInfo info, plugins_dir.entryInfoList(QDir::Files))
+    {
+        if (info.fileName().endsWith(".lua") && info.baseName() != "base")
+        {
+            qInfo() << "Loading plugin: " << info.fileName();
+            lua_error_handler(script, luaL_dofile(script, info.filePath().toStdString().c_str()));
+        }
+    }
 }
 
 QString Channel::title() {
